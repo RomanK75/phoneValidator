@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/lxinu4i0lpg90m6w?svg=true)](https://ci.appveyor.com/project/RomanK75/phonevalidator)
+
 # Домашнее задание к лекции «Регулярные выражения»
 
 **Важно**: каждая задача выполняется в виде отдельного проекта с собственным GitHub репозиторием.
