@@ -1,31 +1,38 @@
 export default function phoneNumberCorrection(phoneNumber) {
   const countriesCodes = [
     { 86: { country: 'China', length: 12 } },
-    { 375: { country: 'Belarus', length: 12 } },
+    { 1: { country: 'USA', length: 11 } },
   ];
 
-  const phoneNumberCorrected = `+${String(phoneNumber.trim().replace(/[^0-9]/g, ''))}`;
-  const countryCode = String(phoneNumber).replace('+', '').split(' ')[0]
-  // If number starts with 7
-  if (countryCode === '7') {
-    return phoneNumberCorrected;
-  // If number start with 8
-  } if (countryCode === '8') {
-    return phoneNumberCorrected.replace('8', '7');
-  }
+  // Remove all spaces and non-digit symbols
+  const phoneNumberCorrected = String(phoneNumber.trim().replace(/[^0-9]/g, ''));
+  // Get country code
+  const countryCode = String(phoneNumber).replace('+', '').split(' ')[0];
+
+  // If number it is a Russian number
+  if (countryCode === '7' || countryCode === '8') {
+    // length check
+    if (phoneNumberCorrected.length === 11) {
+      // RUS NUMBER - PASSED
+    return `+7${phoneNumberCorrected.slice(1)}`;
+    } else {
+      // length error Russian numbers
+      throw new Error('Ошибка : Не верная длинна номера');
+    }
+  } 
+  // foreign numbers
   for (let i = 0; i < countriesCodes.length; i++) {
     // Country code check
-    // console.log(countryCode)
-    // console.log(Object.keys(countriesCodes[i]))
-    if (countryCode == Object.keys(countriesCodes[i])) {
+    if (countryCode === String(Object.keys(countriesCodes[i]))) {
       // length check
-      if (phoneNumberCorrected.length === Object.values(countriesCodes[i])[0].length + 1) {
-        return phoneNumberCorrected;
+      if (phoneNumberCorrected.length === Object.values(countriesCodes[i])[0].length) {
+        // FORIEGN NUMBER - PASSED
+        return `+${phoneNumberCorrected}`;
       }
-      // length error
-      throw new Error(`Ошибка : Не верная длинна номера, Страна : ${Object.values(countriesCodes[i])[0].country}, Длинна номера : ${Object.values(countriesCodes[i])[0].length}`);
+      // length error foreign numbers
+      throw new Error('Ошибка : Не верная длинна номера');
     }
   }
   // Invalid number
-  throw new Error('Ошибка : Не верный формат номера');
+  throw new Error('Ошибка : Не верный код страны');
 }
