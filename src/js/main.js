@@ -14,12 +14,11 @@ export default function phoneNumberCorrection(phoneNumber) {
     // length check
     if (phoneNumberCorrected.length === 11) {
       // RUS NUMBER - PASSED
-    return `+7${phoneNumberCorrected.slice(1)}`;
-    } else {
-      // length error Russian numbers
-      throw new Error('Ошибка : Не верная длинна номера');
+      return `+7${phoneNumberCorrected.slice(1)}`;
     }
-  } 
+    // length error Russian numbers
+    throw new Error('Ошибка : Не верная длинна номера');
+  }
   // foreign numbers
   for (let i = 0; i < countriesCodes.length; i++) {
     // Country code check
